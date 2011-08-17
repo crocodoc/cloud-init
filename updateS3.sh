@@ -2,7 +2,7 @@
 
 echo "#include" > user-data
 
-files=("appserver-init" "server-setup" "nginx" "uwsgi")
+files=("appserver" "server-setup" "nginx" "uwsgi")
 for file in "${files[@]}"
 do
   s3cmd put --acl-public $file s3://mateolargo/cloudinit/$file

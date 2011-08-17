@@ -1,0 +1,9 @@
+#!/bin/bash
+
+apt-get update -qq
+apt-get upgrade -qqy
+apt-get dist-upgrade -qqy
+
+apt-get install -qqy git build-essential python-distribute
+
+su ubuntu -c "mkdir -p /home/ubuntu/Downloads"

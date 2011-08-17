@@ -1,12 +1,12 @@
 #!/bin/bash
 
-apt-get install libpcre3-dev libssl-dev
+apt-get install -qqy libpcre3-dev libssl-dev
 
 mkdir -p /etc/nginx/{sites-available,sites-enabled}
 mkdir -p /usr/local/nginx
 
 su - ubuntu <<UBUNTU
-mkdir /home/ubuntu/Downloads
+mkdir -p /home/ubuntu/Downloads
 cd /home/ubuntu/Downloads
 wget -O nginx-1.0.4.tar.gz http://nginx.org/download/nginx-1.0.4.tar.gz
 tar xf nginx-1.0.4.tar.gz
@@ -32,7 +32,7 @@ UBUNTU
 
 make install
 
-$SERVER_CONFIG=/home/ubuntu/server-config
+SERVER_CONFIG=/home/ubuntu/server-config
 
 link_files=(
     "/etc/nginx/nginx.conf"

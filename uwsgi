@@ -1,17 +1,19 @@
 #!/bin/bash
 
-apt-get install libxml2-dev python-dev
+apt-get install -qqy libxml2-dev python-dev
 
 su - ubuntu <<UBUNTU
-mkdir /home/ubuntu/Downloads
+mkdir -p /home/ubuntu/Downloads
 cd /home/ubuntu/Downloads
 wget -O uwsgi-0.9.8.1.tar.gz http://projects.unbit.it/downloads/uwsgi-0.9.8.1.tar.gz
+tar xf uwsgi-0.9.8.1.tar.gz
+cd uwsgi-0.9.8.1
 make
 UBUNTU
 
-cp uwsgi /usr/sbin/uwsgi
+cp /home/ubuntu/Downloads/uwsgi-0.9.8.1/uwsgi /usr/sbin/uwsgi
 
-$SERVER_CONFIG=/home/ubuntu/server-config
+SERVER_CONFIG=/home/ubuntu/server-config
 
 link_files=(
     "/etc/init.d/uwsgi"
