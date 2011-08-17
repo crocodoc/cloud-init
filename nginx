@@ -1,0 +1,48 @@
+#!/bin/bash
+
+apt-get install libpcre3-dev libssl-dev
+
+mkdir -p /etc/nginx/{sites-available,sites-enabled}
+mkdir -p /usr/local/nginx
+
+su - ubuntu <<UBUNTU
+mkdir /home/ubuntu/Downloads
+cd /home/ubuntu/Downloads
+wget -O nginx-1.0.4.tar.gz http://nginx.org/download/nginx-1.0.4.tar.gz
+tar xf nginx-1.0.4.tar.gz
+cd nginx-1.0.4
+./configure \
+--conf-path=/etc/nginx/nginx.conf \
+--sbin-path=/usr/sbin/nginx \
+--error-log-path=/var/log/nginx/error.log \
+--pid-path=/var/run/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--http-log-path=/var/log/nginx/access.log \
+--http-client-body-temp-path=/var/lib/nginx/body \
+--http-proxy-temp-path=/var/lib/nginx/proxy \
+--http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+--with-http_stub_status_module \
+--with-http_flv_module \
+--with-http_ssl_module \
+--with-http_dav_module \
+--with-http_gzip_static_module \
+--with-http_realip_module
+make
+UBUNTU
+
+make install
+
+$SERVER_CONFIG=/home/ubuntu/server-config
+
+link_files=(
+    "/etc/nginx/nginx.conf"
+    "/etc/nginx/uwsgi_proxy.conf"
+    "/etc/init.d/nginx"
+)
+
+for file in "${link_files[@]}"
+do
+  ln -sf $SERVER_CONFIG$file $file
+done
+
+/etc/init.d/nginx restart

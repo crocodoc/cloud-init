@@ -1,0 +1,22 @@
+#!/bin/bash
+
+su - ubuntu <<UBUNTU
+
+cat <<EOF > /home/ubuntu/.ssh/github_rsa
+###TODO: replace this line with a ssh private key used with github###
+EOF
+chmod 600 /home/ubuntu/.ssh/github_rsa
+
+cat <<EOF >> /home/ubuntu/.ssh/config
+Hostname github.com
+IdentityFile ~/.ssh/github_rsa
+EOF
+
+ssh -T -o StrictHostKeyChecking=false git@github.com
+git config --global user.name "Matt Long"
+git config --global user.email "matt@crocodoc.com"
+git config --global color.ui true
+
+cd /home/ubuntu
+git clone git@github.com:crocodoc/server-setup.git server-config
+UBUNTU

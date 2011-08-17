@@ -1,0 +1,15 @@
+#cloud-config
+
+#See: http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/natty/cloud-init/natty/files/head:/doc/examples/
+
+apt_update: true
+apt_upgrade: true
+
+packages:
+ - git
+ - build-essential
+ - python-distribute
+
+runcmd:
+ - apt-get dist-upgrade -y
+ - mkdir /home/ubuntu/Downloads
